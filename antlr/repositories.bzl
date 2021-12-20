@@ -4,7 +4,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_jar")
 load(":lang.bzl", "C", "CPP", "GO", "JAVA", "OBJC", "PYTHON", "PYTHON2", "PYTHON3", supportedLanguages = "supported")
 
 v4 = [4, "4.7.1", "4.7.2", "4.8", "4.9.2"]
-v4_opt = [4, "4.7.1", "4.7.2", "4.7.3", "4.7.4"]
+v4_opt = [4, "4.7.1", "4.7.2", "4.7.3", "4.7.4", "4.9"]
 v3 = [3, "3.5.2"]
 v2 = [2, "2.7.7"]
 
@@ -59,6 +59,10 @@ PACKAGES = {
             "path": "org/antlr/antlr4-runtime/4.7.1/antlr4-runtime-4.7.1.jar",
             "sha256": "43516d19beae35909e04d06af6c0c58c17bc94e0070c85e8dc9929ca640dc91d",
         },
+        "4.9-opt": {
+            "path": "com/tunnelvisionlabs/antlr4-runtime/4.9.0/antlr4-runtime-4.9.0.jar",
+            "sha256": "e4193ba8034cedf920905bdb318b8a5097d767f999f87ba97a4298de69f3ffab",
+        },
         "4.7.4-opt": {
             "path": "com/tunnelvisionlabs/antlr4-runtime/4.7.4/antlr4-runtime-4.7.4.jar",
             "sha256": "c0616e1eb3b7aa6b4de9a304ea458d50cac279f78b0b65bf7a8176701f8402ee",
@@ -92,6 +96,10 @@ PACKAGES = {
         "4.7.1": {
             "path": "org/antlr/antlr4/4.7.1/antlr4-4.7.1.jar",
             "sha256": "a2cdc2f2f8eb893728832568dc54d080eb5a1495edb3b66e51b97122a60a0d87",
+        },
+        "4.9-opt": {
+            "path": "com/tunnelvisionlabs/antlr4/4.9.0/antlr4-4.9.0.jar",
+            "sha256": "c4634458bc4a9d5751979e93314df4991abf5fa061057c9263256e9503e1cc3b",
         },
         "4.7.4-opt": {
             "path": "com/tunnelvisionlabs/antlr4/4.7.4/antlr4-4.7.4.jar",
@@ -219,7 +227,9 @@ def rules_antlr_optimized_dependencies(version):
     Args:
       version: the ANTLR release version to make available.
     """
-    if version == 4 or version == "4.7.4":
+    if version == 4 or version == "4.9":
+        _antlr49_optimized_dependencies()
+    elif version == "4.7.4":
         _antlr474_optimized_dependencies()
     elif version == "4.7.3":
         _antlr473_optimized_dependencies()
@@ -283,6 +293,15 @@ def _antlr471_dependencies(languages):
             "javax_json": "1.0.4",
         },
     )
+    
+def _antlr49_optimized_dependencies(languages):
+    _dependencies({
+        "antlr4_runtime": "4.9-opt",
+        "antlr4_tool": "4.9-opt",
+        "antlr3_runtime": "3.5.2",
+        "stringtemplate4": "4.3",
+        "javax_json": "1.0.4",
+    })
 
 def _antlr474_optimized_dependencies():
     _dependencies({
