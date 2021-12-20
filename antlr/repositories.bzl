@@ -294,7 +294,7 @@ def _antlr471_dependencies(languages):
         },
     )
     
-def _antlr49_optimized_dependencies(languages):
+def _antlr49_optimized_dependencies():
     _dependencies({
         "antlr4_runtime": "4.9-opt",
         "antlr4_tool": "4.9-opt",
